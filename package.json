@@ -4,7 +4,9 @@
   "description": "repo used to control different aws lambdas",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy-products-services": "cd ./products-service && serverless deploy",
+    "remove-products-services": "cd ./products-service && serverless remove"
   },
   "author": "Jorge Frias",
   "license": "ISC"
