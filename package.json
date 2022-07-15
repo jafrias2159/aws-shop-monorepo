@@ -1,0 +1,11 @@
+{
+  "name": "aws-shop-monorepo",
+  "version": "1.0.0",
+  "description": "repo used to control different aws lambdas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jorge Frias",
+  "license": "ISC"
+}
