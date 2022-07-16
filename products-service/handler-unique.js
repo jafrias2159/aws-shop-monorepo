@@ -1,12 +1,12 @@
 'use strict';
-const productList = require('./statics/productList.json');
+import productList from './statics/productList.json';
 
 const headers = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
 
-module.exports.getProductById = async (event) => {
+const getProductById = async (event) => {
   const id = event.queryStringParameters.id;
   const selectedProduct = productList.find(function (product) {
     return id === product.id;
@@ -26,3 +26,5 @@ module.exports.getProductById = async (event) => {
     body,
   };
 };
+
+export { getProductById };

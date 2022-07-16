@@ -20,6 +20,14 @@ service: products-service
 # Check out our docs for more details
 frameworkVersion: '3'
 
+plugins:
+    - serverless-webpack
+
+custom:
+    webpack:
+        webpackConfig: ./webpack.config.js
+        includeModules: true # enable auto-packing of external modules
+
 provider:
   name: aws
   runtime: nodejs12.x

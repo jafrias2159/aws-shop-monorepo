@@ -1,12 +1,12 @@
 'use strict';
-const productList = require('./statics/productList.json');
+import productList from './statics/productList.json';
 
 const headers = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
 
-exports.getProductList = async (event) => {
+export const getProductList = async (event) => {
   await sleep(500);
   const date = new Date();
   const timeStamp = date.toISOString();
@@ -22,6 +22,6 @@ exports.getProductList = async (event) => {
   };
 };
 
-function sleep(ms) {
+const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
+};
