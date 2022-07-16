@@ -1,18 +1,27 @@
 'use strict';
+const productList = require('./statics/productList.json');
 
-module.exports.getProducts = async (event) => {
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+};
+
+exports.getProductList = async (event) => {
+  await sleep(500);
+  const date = new Date();
+  const timeStamp = date.toISOString();
+  const productsWithtimeStamp = productList.map(function (product) {
+    return { ...product, timeStamp };
+  });
+  const body = JSON.stringify({ products: productsWithtimeStamp });
+
   return {
     statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
+    headers,
+    body,
   };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
 };
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
