@@ -13,7 +13,7 @@ export const getProductList = async (event) => {
   const productsWithtimeStamp = productList.map(function (product) {
     return { ...product, timeStamp };
   });
-  const body = JSON.stringify({ products: productsWithtimeStamp });
+  const body = JSON.stringify({ products: productsWithtimeStamp, env: process.env });
 
   return {
     statusCode: 200,
