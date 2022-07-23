@@ -1,5 +1,5 @@
 'use strict';
-import productList from './statics/productList.json';
+import { client } from './DBConection';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -8,13 +8,10 @@ const headers = {
 
 const getProductById = async (event) => {
   const id = event.queryStringParameters.id;
-  const selectedProduct = productList.find(function (product) {
-    return id === product.id;
-  });
+  const result = await client.query(getQueryString(id));
+
   const [statusCode, product] =
-    typeof selectedProduct === 'undefined'
-      ? [404, 'Product not Found']
-      : [200, selectedProduct];
+    result.rows.length === 0 ? [404, 'Product not Found'] : [200, result.rows[0]];
 
   const body = JSON.stringify({
     product: product,
@@ -25,6 +22,11 @@ const getProductById = async (event) => {
     headers,
     body,
   };
+};
+
+const getQueryString = (id) => {
+  return `SELECT products.*, stocks.product_count as count FROM products JOIN stocks 
+ON products.id = stocks.product_id AND products.id = '${id}';`;
 };
 
 export { getProductById };
