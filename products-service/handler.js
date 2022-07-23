@@ -1,5 +1,5 @@
 'use strict';
-import { client } from './DBConnection';
+import { client } from './db-connection';
 
 const headers = {
   'Content-Type': 'application/json',

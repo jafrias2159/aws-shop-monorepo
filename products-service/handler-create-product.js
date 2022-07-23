@@ -1,5 +1,5 @@
 'use strict';
-import { client } from './DBConnection';
+import { client } from './db-connection';
 import * as yup from 'yup';
 
 const headers = {
