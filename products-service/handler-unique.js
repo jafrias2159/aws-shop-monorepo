@@ -1,5 +1,5 @@
 'use strict';
-import { client } from './DBConection';
+import { client } from './DBConnection';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -7,6 +7,7 @@ const headers = {
 };
 
 const getProductById = async (event) => {
+  console.log('Getting a unique product by id - on  GET /products/{id} endpoint');
   const id = event.queryStringParameters.id;
   const result = await client.query(getQueryString(id));
 

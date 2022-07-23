@@ -1,6 +1,5 @@
 'use strict';
-import { client } from './DBConection';
-import productList from './statics/productList.json';
+import { client } from './DBConnection';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -11,6 +10,7 @@ const sqlGetProductOnStock = `SELECT products.*, stocks.product_count as count F
 ON products.id = stocks.product_id;`;
 
 export const getProductList = async (event) => {
+  console.log('Getting all products on  GET /products endpoint');
   const result = await client.query(sqlGetProductOnStock);
 
   const body = JSON.stringify({ products: result.rows });
@@ -22,6 +22,3 @@ export const getProductList = async (event) => {
   };
 };
 
-const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
