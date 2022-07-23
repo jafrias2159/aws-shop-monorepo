@@ -10,15 +10,23 @@ const sqlGetProductOnStock = `SELECT products.*, stocks.product_count as count F
 ON products.id = stocks.product_id;`;
 
 export const getProductList = async (event) => {
-  console.log('Getting all products on  GET /products endpoint');
-  const result = await client.query(sqlGetProductOnStock);
+  try {
+    console.log('Getting all products on  GET /products endpoint');
 
-  const body = JSON.stringify({ products: result.rows });
+    const result = await client.query(sqlGetProductOnStock);
 
-  return {
-    statusCode: 200,
-    headers,
-    body,
-  };
+    const body = JSON.stringify({ products: result.rows });
+
+    return {
+      statusCode: 200,
+      headers,
+      body,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers,
+      body: "Server Error"
+    };
+  }
 };
-
