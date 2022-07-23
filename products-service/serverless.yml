@@ -86,7 +86,14 @@ functions:
     events:
       - httpApi:
           path: /products/{id}
-          method: get          
+          method: get
+
+  create-product:
+    handler: handler-create-product.createProduct
+    events:
+      - httpApi:
+          path: /products
+          method: post          
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
