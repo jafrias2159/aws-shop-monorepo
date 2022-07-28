@@ -11,7 +11,7 @@ const getProductById = async (event) => {
     console.log(
       'Getting a unique product by id - on  GET /products/{id} endpoint'
     );
-    const id = event.queryStringParameters.id;
+    const id = event.pathParameters.id;
     const query = getQueryString(id);
     const values = [id];
     const result = await client.query(query, values);
