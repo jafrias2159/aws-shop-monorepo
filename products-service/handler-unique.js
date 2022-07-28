@@ -12,7 +12,9 @@ const getProductById = async (event) => {
       'Getting a unique product by id - on  GET /products/{id} endpoint'
     );
     const id = event.queryStringParameters.id;
-    const result = await client.query(getQueryString(id));
+    const query = getQueryString(id);
+    const values = [id];
+    const result = await client.query(query, values);
 
     const [statusCode, product] =
       result.rows.length === 0
@@ -37,9 +39,9 @@ const getProductById = async (event) => {
   }
 };
 
-const getQueryString = (id) => {
+const getQueryString = () => {
   return `SELECT products.*, stocks.product_count as count FROM products JOIN stocks 
-ON products.id = stocks.product_id AND products.id = '${id}';`;
+ON products.id = stocks.product_id AND products.id = $1;`;
 };
 
 export { getProductById };
