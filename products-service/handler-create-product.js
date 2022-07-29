@@ -2,10 +2,10 @@
 import { client } from './db-connection';
 import * as yup from 'yup';
 
-const headers = {
+const headers = JSON.stringify({
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
-};
+});
 
 const createProduct = async (event) => {
   try {
@@ -22,6 +22,7 @@ const createProduct = async (event) => {
       body: 'Bad request, check you body data!',
     };
   } catch (error) {
+    console.log(error);
     return {
       statusCode: 500,
       headers,
