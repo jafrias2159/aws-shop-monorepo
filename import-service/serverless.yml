@@ -72,6 +72,16 @@ functions:
       - httpApi:
           path: /import/{name}
           method: get
+  
+  import-file-parser:
+    handler: fileParsers.importFileParser
+    events:
+      - s3:
+          bucket: s3-bucket-products
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploaded/
+          existing: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
