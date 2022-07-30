@@ -31,6 +31,15 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
+  environment:
+    PG_HOST: ${file(../env.json):DB_ACCESS.PG_HOST}
+    PG_PORT: ${file(../env.json):DB_ACCESS.PG_PORT}
+    PG_DATABASE: ${file(../env.json):DB_ACCESS.PG_DATABASE}
+    PG_USERNAME: ${file(../env.json):DB_ACCESS.PG_USERNAME}
+    PG_PASSWORD: ${file(../env.json):DB_ACCESS.PG_PASSWORD}
+  httpApi:
+    cors: true
+
 
 # you can overwrite defaults here
   stage: dev
@@ -79,7 +88,14 @@ functions:
     events:
       - httpApi:
           path: /products/{id}
-          method: get          
+          method: get
+
+  create-product:
+    handler: handler-create-product.createProduct
+    events:
+      - httpApi:
+          path: /products
+          method: post          
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

@@ -1,0 +1,70 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE products (
+ 	id uuid DEFAULT uuid_generate_v4 (),
+	title varchar(255),
+	description varchar(500),
+	price int NOT NULL,
+	PRIMARY KEY (id)
+)
+
+CREATE TABLE stocks (
+ 	product_id uuid DEFAULT uuid_generate_v4 (),
+	product_count int NOT NULL,
+	CONSTRAINT fk_products
+		  FOREIGN KEY(product_id) 
+		  REFERENCES products(id)
+)
+
+INSERT INTO products (title, description, price)
+values('GRAND THEFT AUTO V PC', 'PC GAME', 202),
+values('THE ELDER SCROLLS V 5', 'PC GAME', 40),
+values('TWO POINT CAMPUS PC (EU & UK)', 'PC GAME', 30),
+values('F1 MANAGER 2022 PC', 'PC GAME', 12),
+values('SD GUNDAM BATTLE ALLIANCE PC', 'PC GAME', 33),
+values('DESTROY ALL HUMANS! 2 - REPROBED PC', 'PC GAME', 55),
+values('DWARVEN TOWERS PC', 'PC GAME', 68),
+values('MINECRAFT PC', 'PC GAME', 45),
+values('HOLLOW KNIGHT: SILKSONG PC', 'PC GAME', 21),
+values('DEAD CELLS PC', 'PC GAME',66)
+
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 202 FROM products
+where products.title = 'GRAND THEFT AUTO V PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 10 FROM products
+where products.title = 'THE ELDER SCROLLS V 5';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 30 FROM products
+where products.title = 'TWO POINT CAMPUS PC (EU & UK)';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 12 FROM products
+where products.title = 'F1 MANAGER 2022 PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 19 FROM products
+where products.title = 'SD GUNDAM BATTLE ALLIANCE PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 2 FROM products
+where products.title = 'DESTROY ALL HUMANS! 2 - REPROBED PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 99 FROM products
+where products.title = 'DWARVEN TOWERS PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 4 FROM products
+where products.title = 'MINECRAFT PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 0 FROM products
+where products.title = 'HOLLOW KNIGHT: SILKSONG PC';
+
+INSERT INTO stocks (product_id, product_count)
+SELECT id as product_id, 26 FROM products
+where products.title = 'DEAD CELLS PC';

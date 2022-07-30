@@ -10,5 +10,8 @@
     "test-get-products-api": "cd ./products-service && serverless invoke --function get-products"
   },
   "author": "Jorge Frias",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.7.3"
+  }
 }

@@ -1,27 +1,32 @@
 'use strict';
-import productList from './statics/productList.json';
+import { client } from './db-connection';
 
 const headers = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
 
+const sqlGetProductOnStock = `SELECT products.*, stocks.product_count as count FROM products JOIN stocks 
+ON products.id = stocks.product_id;`;
+
 export const getProductList = async (event) => {
-  await sleep(500);
-  const date = new Date();
-  const timeStamp = date.toISOString();
-  const productsWithtimeStamp = productList.map(function (product) {
-    return { ...product, timeStamp };
-  });
-  const body = JSON.stringify({ products: productsWithtimeStamp });
+  try {
+    console.log('Getting all products on  GET /products endpoint');
 
-  return {
-    statusCode: 200,
-    headers,
-    body,
-  };
-};
+    const result = await client.query(sqlGetProductOnStock);
 
-const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+    const body = JSON.stringify({ products: result.rows });
+
+    return {
+      statusCode: 200,
+      headers,
+      body,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers,
+      body: "Server Error"
+    };
+  }
 };

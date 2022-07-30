@@ -1,5 +1,5 @@
 'use strict';
-import productList from './statics/productList.json';
+import { client } from './db-connection';
 
 const headers = {
   'Content-Type': 'application/json',
@@ -7,24 +7,41 @@ const headers = {
 };
 
 const getProductById = async (event) => {
-  const id = event.queryStringParameters.id;
-  const selectedProduct = productList.find(function (product) {
-    return id === product.id;
-  });
-  const [statusCode, product] =
-    typeof selectedProduct === 'undefined'
-      ? [404, 'Product not Found']
-      : [200, selectedProduct];
+  try {
+    console.log(
+      'Getting a unique product by id - on  GET /products/{id} endpoint'
+    );
+    const id = event.pathParameters.id;
+    const query = getQueryString(id);
+    const values = [id];
+    const result = await client.query(query, values);
 
-  const body = JSON.stringify({
-    product: product,
-  });
+    const [statusCode, product] =
+      result.rows.length === 0
+        ? [404, 'Product not Found']
+        : [200, result.rows[0]];
 
-  return {
-    statusCode,
-    headers,
-    body,
-  };
+    const body = JSON.stringify({
+      product: product,
+    });
+
+    return {
+      statusCode,
+      headers,
+      body,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers,
+      body: 'Server Error',
+    };
+  }
+};
+
+const getQueryString = () => {
+  return `SELECT products.*, stocks.product_count as count FROM products JOIN stocks 
+ON products.id = stocks.product_id AND products.id = $1;`;
 };
 
 export { getProductById };
