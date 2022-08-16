@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-products-services": "cd ./products-service && serverless deploy",
-    "remove-products-services": "cd ./products-service && serverless remove",
-    "test-get-products-api": "cd ./products-service && serverless invoke --function get-products"
+    "deploy-products-service": "cd ./products-service && serverless deploy",
+    "remove-products-service": "cd ./products-service && serverless remove",
+    "test-get-products-api": "cd ./products-service && serverless invoke --function get-products",
+    "deploy-import-service": "cd ./import-service && serverless deploy"
   },
   "author": "Jorge Frias",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1185.0",
+    "csv-parser": "^3.0.0",
     "pg": "^8.7.3"
   }
 }
